@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LoanPro - Loan Management System
 
 A full-stack loan management application built with **Node.js**, **React**, and **MySQL**.
@@ -274,3 +275,6 @@ Built with ❤️ for learning purposes.
 ---
 
 **Happy Coding! 🚀**
+=======
+# CDAC--Loan-Management-System
+>>>>>>> 8c2813d9ef258ae120671a048b79b9f7fc12b44d
