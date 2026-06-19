@@ -1,280 +1,239 @@
-<<<<<<< HEAD
-# LoanPro - Loan Management System
+🏦 LoanPro - Loan Management System
 
-A full-stack loan management application built with **Node.js**, **React**, and **MySQL**.
+A full-stack Loan Management System built using Spring Boot, Spring Security, Thymeleaf, JPA/Hibernate, MySQL, and Razorpay Integration.
 
-![LoanPro](https://img.shields.io/badge/LoanPro-Loan%20Management-blue)
-![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
-![React](https://img.shields.io/badge/React-18.x-blue)
-![MySQL](https://img.shields.io/badge/MySQL-8.x-orange)
+LoanPro | Spring Boot | Thymeleaf | MySQL | Spring Security
 
-## 📁 Updated Project Structure
-
-```
+📁 Updated Project Structure
 loan-management-system/
-├── backend/
-│   ├── config/
-│   │   └── db.js              # Database connection pool
-│   ├── middleware/
-│   │   └── auth.js            # JWT authentication middleware
-│   ├── routes/
-│   │   ├── auth.js            # Login/Register routes
-│   │   ├── loans.js           # Loan CRUD routes
-│   │   ├── payments.js        # Payment routes
-│   │   ├── users.js           # User management routes
-│   │   └── stats.js           # Dashboard statistics routes
-│   ├── server.js              # Main Express server
-│   ├── package.json
-│   ├── database.sql           # MySQL schema (RUN THIS IN WORKBENCH!)
-│   └── .env.example
-├── frontend/
-│   ├── public/
-│   │   └── index.html
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── common/
-│   │   │   │   ├── Modal.js       # Reusable modal
-│   │   │   │   ├── Sidebar.js     # Reusable sidebar
-│   │   │   │   ├── StatCard.js    # Dashboard stat cards
-│   │   │   │   └── StatusBadge.js # Status badges
-│   │   │   ├── LoginPage.js       # Login/Register page
-│   │   │   ├── UserDashboard.js   # User dashboard
-│   │   │   └── AdminDashboard.js  # Admin dashboard
-│   │   ├── context/
-│   │   │   └── AuthContext.js     # Authentication context
-│   │   ├── services/
-│   │   │   └── api.js             # Axios API service
-│   │   ├── App.js                 # Main app with routing
-│   │   ├── index.js
-│   │   └── index.css
-│   └── package.json
+├── src/
+│   ├── main/
+│   │   ├── java/com/loanmanagement/
+│   │   │   ├── config/
+│   │   │   │   ├── SecurityConfig.java
+│   │   │   │   ├── RazorpayConfig.java
+│   │   │   │   └── DataLoader.java
+│   │   │   ├── controller/
+│   │   │   │   ├── AuthController.java
+│   │   │   │   ├── LoanController.java
+│   │   │   │   ├── PaymentController.java
+│   │   │   │   └── AdminController.java
+│   │   │   ├── service/
+│   │   │   │   ├── LoanService.java
+│   │   │   │   ├── PaymentService.java
+│   │   │   │   ├── DocumentService.java
+│   │   │   │   └── CustomUserDetailsService.java
+│   │   │   ├── repository/
+│   │   │   │   ├── UserRepository.java
+│   │   │   │   ├── LoanRepository.java
+│   │   │   │   ├── PaymentRepository.java
+│   │   │   │   └── DocumentRepository.java
+│   │   │   ├── entity/
+│   │   │   │   ├── User.java
+│   │   │   │   ├── Loan.java
+│   │   │   │   ├── Payment.java
+│   │   │   │   └── Document.java
+│   │   │   ├── dto/
+│   │   │   ├── enums/
+│   │   │   └── LoanManagementApplication.java
+│   │   └── resources/
+│   │       ├── templates/
+│   │       │   ├── admin/
+│   │       │   ├── user/
+│   │       │   ├── fragments/
+│   │       │   ├── login.html
+│   │       │   └── register.html
+│   │       ├── static/
+│   │       │   ├── css/
+│   │       │   └── js/
+│   │       ├── schema.sql
+│   │       └── application.properties
+│   └── test/
+├── pom.xml
 └── README.md
-```
+📋 Features
+👤 User Features
 
-## 🗄️ About database.sql
+✅ User Registration & Login
 
-**IMPORTANT:** The `database.sql` file is just a SQL script. It does NOT work as a database by itself!
+✅ Secure Authentication using Spring Security
 
-### You MUST run it in MySQL Workbench:
-1. Open **MySQL Workbench**
-2. Connect to your MySQL Server
-3. Go to **File → Open SQL Script** → select `database.sql`
-4. Click the ⚡ **Execute** button (lightning bolt)
-5. This creates the `loan_management` database with all tables
+✅ Apply for Loans
 
-This only needs to be done ONCE. After that, your Node.js backend connects to this database.
+✅ Upload Required Documents
 
-## 📋 Features
+✅ Track Loan Status
 
-### User Features
-- ✅ User registration and authentication
-- ✅ Apply for different types of loans (Personal, Home, Car, Education, Business)
-- ✅ Real-time EMI calculator
-- ✅ View loan application status
-- ✅ Make payments on approved loans
-- ✅ View payment history
-- ✅ Update profile information
+✅ View Loan History
 
-### Admin Features
-- ✅ Dashboard with loan statistics
-- ✅ View all loan applications
-- ✅ Approve or reject loan applications
-- ✅ View all registered users
-- ✅ Track all payments
-- ✅ Generate reports
+✅ EMI Calculation
 
-## 🛠️ Tech Stack
+✅ Online Payment Integration using Razorpay
 
-- **Frontend:** React 18, React Router, Axios, React Toastify, React Icons
-- **Backend:** Node.js, Express.js
-- **Database:** MySQL
-- **Authentication:** JWT (JSON Web Tokens)
-- **Password Hashing:** bcryptjs
+✅ Payment History Tracking
 
-## 📁 Project Structure
+👨‍💼 Admin Features
 
-```
-loan-management-system/
-├── backend/
-│   ├── server.js          # Main server file with all routes
-│   ├── package.json       # Backend dependencies
-│   ├── database.sql       # MySQL database schema
-│   └── .env.example       # Environment variables template
-├── frontend/
-│   ├── public/
-│   │   └── index.html     # HTML template
-│   ├── src/
-│   │   ├── App.js         # Main React app with all components
-│   │   ├── index.js       # React entry point
-│   │   └── index.css      # Global styles
-│   └── package.json       # Frontend dependencies
-└── README.md
-```
+✅ Admin Dashboard
 
-## 🚀 Getting Started
+✅ View All Loan Applications
 
-### Prerequisites
+✅ Approve / Reject Loans
 
-- Node.js (v16 or higher)
-- MySQL Server (v8.0 or higher)
-- MySQL Workbench (optional, for database management)
-- npm or yarn
+✅ Manage Users
 
-### 1. Database Setup
+✅ Monitor Payments
 
-1. Open MySQL Workbench and connect to your MySQL server
+✅ Loan Statistics & Reports
 
-2. Open the `backend/database.sql` file and execute it to:
-   - Create the `loan_management` database
-   - Create all required tables (users, loans, payments)
-   - Insert default admin and user accounts
+✅ Review Uploaded Documents
 
-```sql
--- Or run from command line:
-mysql -u root -p < backend/database.sql
-```
+🛠️ Tech Stack
+Backend
+Java 17
+Spring Boot 3
+Spring MVC
+Spring Security
+Spring Data JPA (Hibernate)
+Frontend
+Thymeleaf
+HTML5
+CSS3
+JavaScript
+Database
+MySQL
+Payment Gateway
+Razorpay
+Build Tool
+Maven
+🚀 Getting Started
+Prerequisites
+Java 17+
+Maven
+MySQL Server 8+
+Spring Tool Suite (STS) / IntelliJ IDEA
+1️⃣ Database Setup
 
-### 2. Backend Setup
+Create a MySQL database:
 
-```bash
-# Navigate to backend directory
-cd backend
+CREATE DATABASE loan_management_db;
 
-# Install dependencies
-npm install
+Update database credentials inside:
 
-# Create .env file from example
-cp .env.example .env
+src/main/resources/application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/loan_management_db
+spring.datasource.username=root
+spring.datasource.password=YOUR_PASSWORD
+2️⃣ Clone the Repository
+git clone https://github.com/your-username/loan-management-system.git
 
-# Edit .env with your MySQL credentials
-# DB_HOST=localhost
-# DB_USER=root
-# DB_PASSWORD=your_password
-# DB_NAME=loan_management
-# JWT_SECRET=your-secret-key
-# PORT=5000
+cd loan-management-system
+3️⃣ Build the Project
+mvn clean install
+4️⃣ Run the Application
+mvn spring-boot:run
 
-# Start the server
-npm run dev   # Development mode with nodemon
-# OR
-npm start     # Production mode
-```
+or run:
 
-The backend server will start at `http://localhost:5000`
+LoanManagementApplication.java
 
-### 3. Frontend Setup
+from your IDE.
 
-```bash
-# Navigate to frontend directory
-cd frontend
+🌐 Application URL
+http://localhost:8080
+🔐 Security Features
 
-# Install dependencies
-npm install
+✅ Spring Security Authentication
 
-# Start the development server
-npm start
-```
+✅ Role-Based Access Control (Admin/User)
 
-The frontend will start at `http://localhost:3000`
+✅ Password Encryption
 
-## 🔑 Default Login Credentials
+✅ Secure Session Management
 
-| Role  | Email           | Password  |
-|-------|-----------------|-----------|
-| Admin | admin@loan.com  | admin123  |
-| User  | user@loan.com   | user123   |
+✅ Input Validation
 
-## 📡 API Endpoints
+✅ Protection Against Unauthorized Access
 
-### Authentication
-| Method | Endpoint           | Description        |
-|--------|--------------------|--------------------|
-| POST   | /api/auth/register | Register new user  |
-| POST   | /api/auth/login    | Login user         |
-| GET    | /api/auth/me       | Get current user   |
+💳 Payment Features
 
-### Loans
-| Method | Endpoint                  | Description               |
-|--------|---------------------------|---------------------------|
-| POST   | /api/loans                | Create loan application   |
-| GET    | /api/loans/my-loans       | Get user's loans          |
-| GET    | /api/loans                | Get all loans (Admin)     |
-| GET    | /api/loans/:id            | Get single loan           |
-| PATCH  | /api/loans/:id/status     | Update loan status (Admin)|
+✅ Razorpay Payment Gateway Integration
 
-### Payments
-| Method | Endpoint                  | Description               |
-|--------|---------------------------|---------------------------|
-| POST   | /api/payments             | Make a payment            |
-| GET    | /api/payments/my-payments | Get user's payments       |
-| GET    | /api/payments             | Get all payments (Admin)  |
+✅ Secure Online Transactions
 
-### Users
-| Method | Endpoint            | Description              |
-|--------|---------------------|--------------------------|
-| GET    | /api/users          | Get all users (Admin)    |
-| PUT    | /api/users/profile  | Update user profile      |
+✅ Payment Tracking
 
-### Statistics
-| Method | Endpoint          | Description              |
-|--------|-------------------|--------------------------|
-| GET    | /api/stats/user   | Get user dashboard stats |
-| GET    | /api/stats/admin  | Get admin dashboard stats|
+✅ Transaction Records
 
-## 🔒 Security Features
+📄 Database Entities
+User
+User Registration
+Authentication
+Role Management
+Loan
+Loan Amount
+Interest Rate
+Tenure
+Status Tracking
+Payment
+Payment Records
+Transaction Details
+EMI Tracking
+Document
+Identity Verification
+Loan Documentation
+Secure Upload Storage
+📱 Screenshots
+Login & Registration
+User Registration
+Secure Login
+Role-Based Access
+User Dashboard
+Loan Overview
+Apply for Loan
+Payment Tracking
+Document Upload
+Admin Dashboard
+Manage Applications
+User Management
+Loan Approval System
+Payment Monitoring
+🐛 Troubleshooting
+Database Connection Error
 
-- JWT token-based authentication
-- Password hashing with bcrypt
-- Protected routes for admin-only access
-- Input validation on both frontend and backend
-- SQL injection prevention with parameterized queries
+✔ Verify MySQL is running
 
-## 📱 Screenshots
+✔ Check database credentials
 
-### Login Page
-- User/Admin role selection
-- Registration form
-- Demo credentials display
+✔ Ensure database exists
 
-### User Dashboard
-- Loan statistics overview
-- Recent applications and payments
-- Apply for new loans
-- Make payments
+Application Not Starting
 
-### Admin Dashboard
-- Overview statistics
-- Loan status distribution
-- Manage applications (approve/reject)
-- View all users and payments
-- Generate reports
+✔ Verify Java 17 is installed
 
-## 🐛 Troubleshooting
+✔ Run:
 
-### Database Connection Error
-- Ensure MySQL server is running
-- Check your .env file credentials
-- Verify the database exists
+mvn clean install
 
-### CORS Error
-- Backend must be running on port 5000
-- Frontend proxy is configured in package.json
+✔ Check Maven dependencies
 
-### Login Issues
-- Run the database.sql to create default users
-- Password for default users is hashed - use the credentials above
+Razorpay Issues
 
-## 📄 License
+✔ Verify Razorpay Key ID
 
-This project is open source and available under the [MIT License](LICENSE).
+✔ Verify Razorpay Secret Key
 
-## 👨‍💻 Author
+✔ Update credentials in:
 
-Built with ❤️ for learning purposes.
+application.properties
+📄 License
 
----
+This project is developed for educational and learning purposes.
 
-**Happy Coding! 🚀**
-=======
-# CDAC--Loan-Management-System
->>>>>>> 8c2813d9ef258ae120671a048b79b9f7fc12b44d
+👨‍💻 Author
+
+Harshavardhan Latkar
+
+Built with ❤️ using Spring Boot, Thymeleaf, MySQL, and Razorpay.
+
+🚀 Happy Coding!
