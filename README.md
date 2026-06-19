@@ -343,9 +343,13 @@ mvn clean install
 ## 👨‍💻 Author
 
 **Harshavardhan Latkar**
+
 **Ritesh Singh**
+
 **Vishal Rawat**
+
 **Abhishek Kumar Singh**
+
 
 Built with ❤️ using Spring Boot, Spring Security, Thymeleaf, MySQL, Hibernate, and Razorpay.
 
