@@ -1,10 +1,87 @@
-🏦 LoanPro - Loan Management System
+# 🏦 LoanPro - Loan Management System
 
-A full-stack Loan Management System built using Spring Boot, Spring Security, Thymeleaf, JPA/Hibernate, MySQL, and Razorpay Integration.
+A comprehensive Loan Management System developed using **Spring Boot, Spring Security, Thymeleaf, Hibernate/JPA, MySQL, and Razorpay**. The application streamlines the loan application process, enables secure user authentication, loan tracking, document management, and online payment processing.
 
-LoanPro | Spring Boot | Thymeleaf | MySQL | Spring Security
-📁 Project Structure
+---
 
+## 🚀 Features
+
+### 👤 User Features
+
+✅ User Registration and Login
+
+✅ Secure Authentication using Spring Security
+
+✅ Apply for Multiple Loan Types
+
+✅ Upload Required Documents
+
+✅ EMI Calculation
+
+✅ Track Loan Application Status
+
+✅ View Loan History
+
+✅ Make Online Payments using Razorpay
+
+✅ View Payment History
+
+✅ Profile Management
+
+---
+
+### 👨‍💼 Admin Features
+
+✅ Admin Dashboard
+
+✅ View All Loan Applications
+
+✅ Approve or Reject Loan Requests
+
+✅ Manage Registered Users
+
+✅ Monitor Loan Payments
+
+✅ View Uploaded Documents
+
+✅ Generate Reports and Statistics
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+
+* Java 17
+* Spring Boot
+* Spring MVC
+* Spring Security
+* Spring Data JPA (Hibernate)
+
+### Frontend
+
+* Thymeleaf
+* HTML5
+* CSS3
+* JavaScript
+
+### Database
+
+* MySQL
+
+### Payment Gateway
+
+* Razorpay
+
+### Build Tool
+
+* Maven
+
+---
+
+## 📁 Project Structure
+
+```text
 loan-management-system/
 │
 ├── src/
@@ -62,186 +139,211 @@ loan-management-system/
 ├── test/
 ├── pom.xml
 └── README.md
+```
 
-📋 Features
+---
 
-👤 User Features
-
-✅ User Registration & Login
-✅ Secure Authentication using Spring Security
-✅ Apply for Loans
-✅ Upload Required Documents
-✅ Track Loan Status
-✅ View Loan History
-✅ EMI Calculation
-✅ Online Payment Integration using Razorpay
-✅ Payment History Tracking
-
-👨‍💼 Admin Features
-
-✅ Admin Dashboard
-✅ View All Loan Applications
-✅ Approve / Reject Loans
-✅ Manage Users
-✅ Monitor Payments
-✅ Loan Statistics & Reports
-✅ Review Uploaded Documents
-
-🛠️ Tech Stack
-
-Backend
-
-Java 17
-Spring Boot 3
-Spring MVC
-Spring Security
-Spring Data JPA (Hibernate)
-
-Frontend
-
-Thymeleaf
-HTML5
-CSS3
-JavaScript
-
-Database
-
-MySQL
-
-Payment Gateway
-Razorpay
-
-Build Tool
-Maven
-
-🚀 Getting Started
-
-Prerequisites
-Java 17+
-Maven
-MySQL Server 8+
-Spring Tool Suite (STS) / IntelliJ IDEA
-
-1️⃣ Database Setup
+## 🗄️ Database Configuration
 
 Create a MySQL database:
+
+```sql
 CREATE DATABASE loan_management_db;
-Update database credentials inside:
-src/main/resources/application.properties
+```
+
+Configure database credentials inside:
+
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/loan_management_db
 spring.datasource.username=root
-spring.datasource.password=YOUR_PASSWORD
+spring.datasource.password=your_password
 
-2️⃣ Clone the Repository
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/your-username/loan-management-system.git
+
 cd loan-management-system
+```
 
-3️⃣ Build the Project
+### 2️⃣ Install Dependencies
+
+```bash
 mvn clean install
+```
 
-4️⃣ Run the Application
+### 3️⃣ Configure Database
+
+Update the MySQL credentials in:
+
+```text
+src/main/resources/application.properties
+```
+
+### 4️⃣ Run the Application
+
+```bash
 mvn spring-boot:run
+```
 
 or run:
 
+```text
 LoanManagementApplication.java
+```
 
 from your IDE.
 
-🌐 Application URL
+---
+
+## 🌐 Application URL
+
+```text
 http://localhost:8080
+```
 
-🔐 Security Features
+---
 
-✅ Spring Security Authentication
-✅ Role-Based Access Control (Admin/User)
-✅ Password Encryption
-✅ Secure Session Management
-✅ Input Validation
-✅ Protection Against Unauthorized Access
+## 🔒 Security Features
 
-💳 Payment Features
+* Spring Security Authentication
+* Role-Based Authorization (Admin/User)
+* Password Encryption
+* Session Management
+* Input Validation
+* Secure Route Protection
 
-✅ Razorpay Payment Gateway Integration
-✅ Secure Online Transactions
-✅ Payment Tracking
-✅ Transaction Records
+---
 
-📄 Database Entities
+## 💳 Razorpay Integration
 
-User
-User Registration
-Authentication
-Role Management
+The application supports secure online loan payment processing through Razorpay.
 
-Loan
-Loan Amount
-Interest Rate
-Tenure
-Status Tracking
+Features include:
 
-Payment
-Payment Records
-Transaction Details
-EMI Tracking
-Document
-Identity Verification
-Loan Documentation
-Secure Upload Storage
+* Secure Payment Gateway
+* Transaction Tracking
+* Payment History
+* EMI Payment Support
 
-📱 Screenshots
+---
 
-Login & Registration
-User Registration
-Secure Login
-Role-Based Access
-User Dashboard
-Loan Overview
-Apply for Loan
-Payment Tracking
-Document Upload
-Admin Dashboard
-Manage Applications
-User Management
-Loan Approval System
-Payment Monitoring
+## 📄 Core Modules
 
-🐛 Troubleshooting
-Database Connection Error
+### User Module
 
-✔ Verify MySQL is running
+* Registration
+* Login
+* Profile Management
 
-✔ Check database credentials
+### Loan Module
 
-✔ Ensure database exists
+* Loan Application
+* Loan Approval Workflow
+* Loan Status Tracking
 
-Application Not Starting
+### Document Module
+
+* Document Upload
+* Verification Support
+
+### Payment Module
+
+* Online Payments
+* Payment Records
+* Transaction Management
+
+### Admin Module
+
+* User Management
+* Loan Management
+* Payment Monitoring
+* Reports & Analytics
+
+---
+
+## 📱 Application Screens
+
+### Login & Registration
+
+* Secure Login
+* New User Registration
+* Role-Based Access
+
+### User Dashboard
+
+* Loan Overview
+* EMI Details
+* Payment Tracking
+* Document Upload
+
+### Admin Dashboard
+
+* Loan Management
+* User Management
+* Payment Monitoring
+* Reports & Statistics
+
+---
+
+## 🐛 Troubleshooting
+
+### Database Connection Error
+
+✔ Ensure MySQL Server is running
+
+✔ Verify database credentials
+
+✔ Check database name configuration
+
+---
+
+### Application Startup Error
 
 ✔ Verify Java 17 is installed
 
 ✔ Run:
 
+```bash
 mvn clean install
+```
 
-✔ Check Maven dependencies
+✔ Refresh Maven Dependencies
 
-Razorpay Issues
+---
+
+### Razorpay Integration Error
 
 ✔ Verify Razorpay Key ID
 
 ✔ Verify Razorpay Secret Key
 
-✔ Update credentials in:
+✔ Check application.properties configuration
 
-application.properties
-📄 License
+---
 
-This project is developed for educational and learning purposes.
+## 📚 Future Enhancements
 
-👨‍💻 Author
+* Email Notifications
+* Loan Eligibility Prediction
+* PDF Report Generation
+* SMS Alerts
+* Loan Recommendation System
 
-Harshavardhan Latkar
+---
 
-Built with ❤️ using Spring Boot, Thymeleaf, MySQL, and Razorpay.
+## 👨‍💻 Author
+
+**Harshavardhan Latkar**
+
+Built with ❤️ using Spring Boot, Spring Security, Thymeleaf, MySQL, Hibernate, and Razorpay.
 
 🚀 Happy Coding!
