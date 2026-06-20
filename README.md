@@ -1,3 +1,5 @@
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://loan-management-system-cdac.netlify.app)
+
 # 🏦 LoanPro - Loan Management System
 
 A comprehensive Loan Management System developed using **Spring Boot, Spring Security, Thymeleaf, Hibernate/JPA, MySQL, and Razorpay**. The application streamlines the loan application process, enables secure user authentication, loan tracking, document management, and online payment processing.
