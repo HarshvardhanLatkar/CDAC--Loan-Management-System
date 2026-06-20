@@ -1,6 +1,6 @@
-# ⭐⭐ Click Here To Get A Live Demo Of Our Project
+# ⭐⭐ Live Demo Of Our Project
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://loan-management-system-cdac.netlify.app)
+🔗 [Click Here to View Live Demo](https://loan-management-system-cdac.netlify.app)
 
 
 
