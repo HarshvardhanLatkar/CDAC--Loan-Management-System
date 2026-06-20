@@ -1,6 +1,6 @@
 # ⭐⭐ Live Demo Of Our Project
 
-🔗 [Click Here to View Live Demo](https://loan-management-system-cdac.netlify.app)
+🔗 https://loan-management-system-cdac.netlify.app
 
 
 
