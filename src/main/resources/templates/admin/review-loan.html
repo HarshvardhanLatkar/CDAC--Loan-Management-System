@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Review Loans')}"></head>
+<body class="bg-slate-900">
+<div class="flex min-h-screen">
+    <div th:replace="~{fragments/sidebar :: admin-sidebar}"></div>
+    <main class="flex-1 p-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-white">Review Pending Loans</h1>
+                <p class="text-slate-400 mt-1">Approve or reject pending loan applications</p>
+            </div>
+
+            <div th:if="${success}" class="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400" th:text="${success}"></div>
+            <div th:if="${error}" class="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400" th:text="${error}"></div>
+
+            <div th:if="${loans.isEmpty()}" class="card rounded-2xl p-16 text-center">
+                <svg class="w-16 h-16 text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                </svg>
+                <p class="text-slate-400 text-lg font-medium">All caught up!</p>
+                <p class="text-slate-500 text-sm mt-1">No pending loans to review</p>
+            </div>
+
+            <div th:if="${!loans.isEmpty()}" class="space-y-6">
+                <div th:each="loan : ${loans}" class="card rounded-xl p-6">
+                    <!-- Header -->
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <h3 class="text-white font-bold text-lg">Loan #<span th:text="${loan.id}"></span></h3>
+                                <span class="badge-pending px-2.5 py-0.5 rounded-full text-xs font-medium">PENDING</span>
+                            </div>
+                            <p class="text-slate-400 text-sm">Applied: <span th:text="${#temporals.format(loan.createdAt, 'dd MMM yyyy, hh:mm a')}"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Loan & Applicant Details -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <p class="text-slate-400 text-xs mb-1">Applicant</p>
+                            <p class="text-white font-medium text-sm" th:text="${loan.user.name}"></p>
+                            <p class="text-slate-400 text-xs" th:text="${loan.user.email}"></p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <p class="text-slate-400 text-xs mb-1">Loan Amount</p>
+                            <p class="text-white font-semibold" th:text="'₹' + ${#numbers.formatDecimal(loan.loanAmount, 1, 'COMMA', 2, 'POINT')}"></p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <p class="text-slate-400 text-xs mb-1">Monthly EMI</p>
+                            <p class="text-indigo-400 font-semibold" th:text="'₹' + ${#numbers.formatDecimal(loan.emi, 1, 'COMMA', 2, 'POINT')}"></p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <p class="text-slate-400 text-xs mb-1">Tenure / Rate</p>
+                            <p class="text-white font-semibold" th:text="${loan.tenureMonths} + ' mo @ ' + ${loan.interestRate} + '%'"></p>
+                        </div>
+                    </div>
+
+                    <!-- Documents -->
+                    <div class="mb-6">
+                        <p class="text-slate-400 text-sm font-medium mb-3">Uploaded Documents
+                            (<span th:text="${loan.documents != null ? loan.documents.size() : 0}"></span>/3)</p>
+                        <div th:if="${loan.documents == null || loan.documents.isEmpty()}"
+                             class="text-slate-500 text-sm bg-slate-800/30 rounded-lg p-3">No documents uploaded yet</div>
+                        <div th:if="${loan.documents != null && !loan.documents.isEmpty()}" class="flex flex-wrap gap-3">
+                            <div th:each="doc : ${loan.documents}"
+                                 class="flex items-center gap-2 bg-slate-800/50 rounded-lg px-4 py-2">
+                                <svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-slate-300 text-sm" th:text="${doc.documentType.name().replace('_',' ')}"></span>
+                                <span class="text-slate-500 text-xs" th:text="'(' + ${#numbers.formatDecimal(doc.fileSize / 1024.0, 1, 'POINT', 1, 'POINT')} + ' KB)'"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-wrap gap-4 pt-4 border-t border-slate-700">
+                        <form th:action="@{/admin/loans/{id}/approve(id=${loan.id})}" method="post" class="inline">
+                            <button type="submit"
+                                    class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium transition-colors flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                Approve Loan
+                            </button>
+                        </form>
+
+                        <form th:action="@{/admin/loans/{id}/reject(id=${loan.id})}" method="post" class="flex-1 flex gap-3" id="rejectForm">
+                            <input type="text" name="reason" placeholder="Rejection reason (required)" required
+                                   class="input-field flex-1 px-4 py-2.5 rounded-xl text-sm"/>
+                            <button type="submit"
+                                    class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-colors flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                Reject
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

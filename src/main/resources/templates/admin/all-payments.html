@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('All Payments')}"></head>
+<body class="bg-slate-900">
+<div class="flex min-h-screen">
+    <div th:replace="~{fragments/sidebar :: admin-sidebar}"></div>
+    <main class="flex-1 p-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-white">All Payments</h1>
+                    <p class="text-slate-400 mt-1">EMI payment records</p>
+                </div>
+                <div class="card rounded-xl px-6 py-3 text-right">
+                    <p class="text-slate-400 text-xs">Total Collected</p>
+                    <p class="text-emerald-400 font-bold text-xl">
+                        ₹<span th:text="${#numbers.formatDecimal(totalCollected, 1, 'COMMA', 2, 'POINT')}">0</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card rounded-xl overflow-hidden">
+                <div th:if="${payments.isEmpty()}" class="p-16 text-center text-slate-500">No payments recorded yet.</div>
+                <div th:if="${!payments.isEmpty()}" class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-800/50">
+                            <tr>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Payment ID</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Loan</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Borrower</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Amount</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Razorpay Order</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Status</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${payments}" class="border-t border-slate-800 hover:bg-slate-800/30">
+                                <td class="px-6 py-4 text-slate-400 text-sm" th:text="'#' + ${p.id}"></td>
+                                <td class="px-6 py-4 text-slate-300 text-sm" th:text="'#' + ${p.loan.id}"></td>
+                                <td class="px-6 py-4">
+                                    <p class="text-white text-sm" th:text="${p.loan.user.name}"></p>
+                                    <p class="text-slate-400 text-xs" th:text="${p.loan.user.email}"></p>
+                                </td>
+                                <td class="px-6 py-4 text-white font-semibold text-sm"
+                                    th:text="'₹' + ${#numbers.formatDecimal(p.amount, 1, 'COMMA', 2, 'POINT')}"></td>
+                                <td class="px-6 py-4 text-slate-400 text-xs font-mono"
+                                    th:text="${p.razorpayOrderId != null ? p.razorpayOrderId : '—'}"></td>
+                                <td class="px-6 py-4">
+                                    <span th:class="'px-2.5 py-1 rounded-full text-xs font-medium ' + (${p.status == 'SUCCESS'} ? 'badge-approved' : (${p.status == 'FAILED'} ? 'badge-rejected' : 'badge-pending'))"
+                                          th:text="${p.status}"></span>
+                                </td>
+                                <td class="px-6 py-4 text-slate-400 text-sm"
+                                    th:text="${#temporals.format(p.paymentDate, 'dd MMM yyyy, hh:mm a')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

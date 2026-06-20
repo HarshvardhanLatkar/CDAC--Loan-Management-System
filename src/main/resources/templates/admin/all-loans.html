@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('All Loans')}"></head>
+<body class="bg-slate-900">
+<div class="flex min-h-screen">
+    <div th:replace="~{fragments/sidebar :: admin-sidebar}"></div>
+    <main class="flex-1 p-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-white">All Loans</h1>
+                    <p class="text-slate-400 mt-1">Complete list of loan applications</p>
+                </div>
+                <a href="/admin/review" class="btn-primary px-5 py-2.5 rounded-xl text-white font-medium text-sm">Review Pending</a>
+            </div>
+
+            <div class="card rounded-xl overflow-hidden">
+                <div th:if="${loans.isEmpty()}" class="p-16 text-center text-slate-500">No loan applications yet.</div>
+                <div th:if="${!loans.isEmpty()}" class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-800/50">
+                            <tr>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">ID</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Applicant</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Amount</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">EMI</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Tenure</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Rate</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Status</th>
+                                <th class="text-left text-slate-400 text-xs font-medium px-6 py-4">Applied On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="loan : ${loans}" class="border-t border-slate-800 hover:bg-slate-800/30 transition-colors">
+                                <td class="px-6 py-4 text-slate-400 text-sm" th:text="'#' + ${loan.id}"></td>
+                                <td class="px-6 py-4">
+                                    <p class="text-white text-sm font-medium" th:text="${loan.user.name}"></p>
+                                    <p class="text-slate-400 text-xs" th:text="${loan.user.email}"></p>
+                                </td>
+                                <td class="px-6 py-4 text-white font-semibold text-sm"
+                                    th:text="'₹' + ${#numbers.formatDecimal(loan.loanAmount, 1, 'COMMA', 2, 'POINT')}"></td>
+                                <td class="px-6 py-4 text-indigo-400 text-sm"
+                                    th:text="'₹' + ${#numbers.formatDecimal(loan.emi, 1, 'COMMA', 2, 'POINT')}"></td>
+                                <td class="px-6 py-4 text-slate-300 text-sm" th:text="${loan.tenureMonths} + ' mo'"></td>
+                                <td class="px-6 py-4 text-slate-300 text-sm" th:text="${loan.interestRate} + '%'"></td>
+                                <td class="px-6 py-4">
+                                    <span th:class="'px-2.5 py-1 rounded-full text-xs font-medium ' + (${loan.status.name() == 'APPROVED'} ? 'badge-approved' : (${loan.status.name() == 'REJECTED'} ? 'badge-rejected' : 'badge-pending'))"
+                                          th:text="${loan.status}"></span>
+                                </td>
+                                <td class="px-6 py-4 text-slate-400 text-sm"
+                                    th:text="${#temporals.format(loan.createdAt, 'dd MMM yyyy')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

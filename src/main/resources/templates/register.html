@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Register')}"></head>
+<body class="min-h-screen flex items-center justify-center bg-slate-900 py-10">
+<div class="w-full max-w-md px-4">
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl btn-primary mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+            </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-white">Create Account</h1>
+        <p class="text-slate-400 mt-1">Join Loan Management System</p>
+    </div>
+
+    <div class="card rounded-2xl p-8 shadow-2xl">
+        <form th:action="@{/register}" th:object="${user}" method="post" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Full Name</label>
+                <input type="text" th:field="*{name}" placeholder="John Doe" required
+                       class="input-field w-full px-4 py-3 rounded-xl"/>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-400 text-xs mt-1"></p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Email Address</label>
+                <input type="email" th:field="*{email}" placeholder="you@example.com" required
+                       class="input-field w-full px-4 py-3 rounded-xl"/>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-400 text-xs mt-1"></p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+                <input type="password" th:field="*{password}" placeholder="Min. 6 characters" required
+                       class="input-field w-full px-4 py-3 rounded-xl"/>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-400 text-xs mt-1"></p>
+            </div>
+            <button type="submit" class="btn-primary w-full py-3 rounded-xl text-white font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/25">
+                Create Account
+            </button>
+        </form>
+
+        <p class="text-center text-slate-400 text-sm mt-6">
+            Already have an account?
+            <a href="/login" class="text-indigo-400 hover:text-indigo-300 font-medium ml-1">Sign in</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

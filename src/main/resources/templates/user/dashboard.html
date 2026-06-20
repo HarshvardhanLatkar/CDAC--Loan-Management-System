@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Dashboard')}"></head>
+<body class="bg-slate-900">
+<div class="flex min-h-screen">
+    <div th:replace="~{fragments/sidebar :: user-sidebar}"></div>
+    <main class="flex-1 p-8">
+        <div class="max-w-6xl mx-auto">
+            <div th:if="${success}" class="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400" th:text="${success}"></div>
+            <div th:if="${error}" class="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400" th:text="${error}"></div>
+
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-white">Welcome back, <span th:text="${user.name}">User</span>! 👋</h1>
+                <p class="text-slate-400 mt-1">Here's an overview of your loans</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="card rounded-xl p-6">
+                    <p class="text-slate-400 text-sm">Total Loans</p>
+                    <p class="text-3xl font-bold text-white mt-1" th:text="${loans.size()}">0</p>
+                </div>
+                <div class="card rounded-xl p-6">
+                    <p class="text-slate-400 text-sm">Active Loans</p>
+                    <p class="text-3xl font-bold text-emerald-400 mt-1" th:text="${activeCount}">0</p>
+                </div>
+                <div class="card rounded-xl p-6">
+                    <p class="text-slate-400 text-sm">Pending Approval</p>
+                    <p class="text-3xl font-bold text-yellow-400 mt-1" th:text="${pendingCount}">0</p>
+                </div>
+            </div>
+
+            <!-- Recent Loans -->
+            <div class="card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-semibold text-white">Recent Loans</h2>
+                    <a href="/user/apply-loan" class="btn-primary px-4 py-2 rounded-lg text-white text-sm font-medium">+ Apply for Loan</a>
+                </div>
+                <div th:if="${loans.isEmpty()}" class="text-center py-12">
+                    <p class="text-slate-500">No loans yet. Apply for your first loan!</p>
+                    <a href="/user/apply-loan" class="inline-block mt-4 btn-primary px-6 py-2.5 rounded-xl text-white font-medium">Apply Now</a>
+                </div>
+                <div th:if="${!loans.isEmpty()}" class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-slate-700">
+                                <th class="text-left text-slate-400 text-sm pb-3">Loan ID</th>
+                                <th class="text-left text-slate-400 text-sm pb-3">Amount</th>
+                                <th class="text-left text-slate-400 text-sm pb-3">EMI</th>
+                                <th class="text-left text-slate-400 text-sm pb-3">Tenure</th>
+                                <th class="text-left text-slate-400 text-sm pb-3">Status</th>
+                                <th class="text-left text-slate-400 text-sm pb-3">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="loan : ${loans}" class="border-b border-slate-800">
+                                <td class="py-3 text-slate-300" th:text="'#' + ${loan.id}"></td>
+                                <td class="py-3 text-white font-medium" th:text="'₹' + ${#numbers.formatDecimal(loan.loanAmount, 1, 'COMMA', 2, 'POINT')}"></td>
+                                <td class="py-3 text-indigo-400" th:text="'₹' + ${#numbers.formatDecimal(loan.emi, 1, 'COMMA', 2, 'POINT')}"></td>
+                                <td class="py-3 text-slate-300" th:text="${loan.tenureMonths} + ' months'"></td>
+                                <td class="py-3">
+                                    <span th:class="'px-2 py-1 rounded-full text-xs font-medium ' +
+                                        (${loan.status.name() == 'APPROVED'} ? 'badge-approved' :
+                                        (${loan.status.name() == 'REJECTED'} ? 'badge-rejected' : 'badge-pending'))"
+                                          th:text="${loan.status}"></span>
+                                </td>
+                                <td class="py-3 text-slate-400" th:text="${#temporals.format(loan.createdAt, 'dd MMM yyyy')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

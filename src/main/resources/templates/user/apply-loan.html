@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Apply for Loan')}"></head>
+<body class="bg-slate-900">
+<div class="flex min-h-screen">
+    <div th:replace="~{fragments/sidebar :: user-sidebar}"></div>
+    <main class="flex-1 p-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-white">Apply for a Loan</h1>
+                <p class="text-slate-400 mt-1">Fill in the details below. Rate is fixed at 10.5% p.a.</p>
+            </div>
+
+            <div th:if="${success}" class="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400" th:text="${success}"></div>
+            <div th:if="${error}" class="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400" th:text="${error}"></div>
+
+            <div class="card rounded-2xl p-8">
+                <form th:action="@{/user/apply-loan}" method="post" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">Loan Amount (₹)</label>
+                        <input type="number" name="loanAmount" min="10000" max="5000000" step="1000"
+                               placeholder="e.g. 500000" required
+                               class="input-field w-full px-4 py-3 rounded-xl"/>
+                        <p class="text-slate-500 text-xs mt-1">Min: ₹10,000 — Max: ₹50,00,000</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">Tenure (Months)</label>
+                        <input type="number" name="tenureMonths" min="3" max="360"
+                               placeholder="e.g. 60" required
+                               class="input-field w-full px-4 py-3 rounded-xl"/>
+                        <p class="text-slate-500 text-xs mt-1">Min: 3 months — Max: 360 months (30 years)</p>
+                    </div>
+
+                    <!-- EMI Preview -->
+                    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
+                        <p class="text-slate-400 text-sm mb-2">EMI Preview (10.5% p.a.)</p>
+                        <p class="text-indigo-400 font-semibold text-lg" id="emiPreview">Enter amount and tenure above</p>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full py-3 rounded-xl text-white font-semibold">
+                        Submit Application
+                    </button>
+                </form>
+            </div>
+
+            <div class="card rounded-xl p-5 mt-6">
+                <h3 class="text-sm font-semibold text-slate-300 mb-3">📋 What happens next?</h3>
+                <ul class="space-y-2 text-sm text-slate-400">
+                    <li class="flex items-start gap-2"><span class="text-indigo-400 mt-0.5">1.</span> Your application will be reviewed by an admin</li>
+                    <li class="flex items-start gap-2"><span class="text-indigo-400 mt-0.5">2.</span> Upload required documents (Identity, Address, Income proof)</li>
+                    <li class="flex items-start gap-2"><span class="text-indigo-400 mt-0.5">3.</span> Once approved, pay EMIs via Razorpay</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function calcEMI(P, annualRate, n) {
+        const r = annualRate / 12 / 100;
+        if (r === 0) return (P / n).toFixed(2);
+        const emi = P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+        return emi.toFixed(2);
+    }
+    function update() {
+        const P = parseFloat(document.querySelector('[name=loanAmount]').value);
+        const n = parseInt(document.querySelector('[name=tenureMonths]').value);
+        const el = document.getElementById('emiPreview');
+        if (P > 0 && n > 0) {
+            const emi = calcEMI(P, 10.5, n);
+            el.textContent = '₹' + parseFloat(emi).toLocaleString('en-IN', {minimumFractionDigits:2}) + ' / month';
+        } else {
+            el.textContent = 'Enter amount and tenure above';
+        }
+    }
+    document.querySelector('[name=loanAmount]').addEventListener('input', update);
+    document.querySelector('[name=tenureMonths]').addEventListener('input', update);
+</script>
+</body>
+</html>
